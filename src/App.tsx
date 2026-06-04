@@ -66,41 +66,41 @@ function App() {
         - grayscale: Mengubah gambar menjadi 100% hitam putih murni.
         - opacity-40: Dibuat samar agar fokus tidak terpecah.
     */}
-              {/* <div className="absolute inset-0 bg-zinc-300 rounded-2xl shadow-xl transition-all duration-700 ease-out transform -translate-y-14 sm:-translate-y-16 scale-85 grayscale opacity-40 group-hover:-translate-y-24 group-hover:scale-90 overflow-hidden border border-zinc-400/20">
+              <div className="absolute inset-0 bg-zinc-300 rounded-2xl shadow-xl transition-all duration-700 ease-out transform -translate-y-14 sm:-translate-y-16 scale-85 grayscale opacity-40 group-hover:-translate-y-24 group-hover:scale-90 overflow-hidden border border-zinc-400/20">
                 <img
                   src={projects1}
                   alt="Project Stack Back"
                   className="w-full h-full object-cover object-center"
                 />
-              </div> */}
+              </div>
 
               {/* ── 🃏 KARTU 2 (TENGAH - SETENGAH HITAM PUTIH / MUTED) ──
         - -translate-y-8: Posisi menggantung di tengah tumpukan.
         - scale-92: Ukuran transisi medium.
         - grayscale-[50%] / opacity-70: Warna mulai memudar setengah matang menuju monokrom.
     */}
-              {/* <div className="absolute inset-0 bg-zinc-200 rounded-2xl shadow-2xl transition-all duration-700 ease-out transform -translate-y-7 sm:-translate-y-8 scale-92 grayscale-[60%] opacity-70 group-hover:-translate-y-12 group-hover:scale-98 overflow-hidden border border-zinc-300/30">
+              <div className="absolute inset-0 bg-zinc-200 rounded-2xl shadow-2xl transition-all duration-700 ease-out transform -translate-y-7 sm:-translate-y-8 scale-92 grayscale-[60%] opacity-70 group-hover:-translate-y-12 group-hover:scale-98 overflow-hidden border border-zinc-300/30">
                 <img
                   src={projects1}
                   alt="Project Stack Middle"
                   className="w-full h-full object-cover object-center"
                 />
-              </div> */}
+              </div>
 
               {/* ── 🃏 KARTU 3 (PALING DEPAN - FULL WARNA & UTAMA) ──
         - z-10: Berada di kasta tertinggi paling depan monitor.
         - shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)]: Bayangan tebal menyebar ke bawah agar terlihat sangat melayang.
         - scale-100 / grayscale-0: Tampil tajam dengan warna asli 100%.
     */}
-              {/* <div className="absolute inset-0 bg-white rounded-2xl z-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-white/40 transition-all duration-700 ease-out transform scale-100 group-hover:scale-105 overflow-hidden ">
+              <div className="absolute inset-0 bg-white rounded-2xl z-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-white/40 transition-all duration-700 ease-out transform scale-100 group-hover:scale-105 overflow-hidden ">
                 <img
                   src={projects1}
                   alt="Main Project Front"
                   className="w-full h-full object-cover object-center"
                 />
-                
+
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none" />
-              </div> */}
+              </div>
             </div>
           </div>
 
