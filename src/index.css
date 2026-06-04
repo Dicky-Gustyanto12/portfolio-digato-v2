@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@utility animate-fade-scroll {
+  animation-name: fadeOutPure;
+  animation-fill-mode: both; /* Menjaga opacity tetap 0 saat animasi selesai */
+  animation-timing-function: linear;
+}
+
+@keyframes fadeOutPure {
+  from {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(0.95); /* Sedikit mengecil menjauh ke latar belakang */
+  }
+}
+
+@theme {
+  /* Gabungan 2 lapis bayangan: 
+     - Lapis 1: Menyebar luas & sangat transparan (rgba hitam cuma 4%)
+     - Lapis 2: Menjaga bayangan tipis di dekat pinggiran kapsul (rgba hitam cuma 2%)
+  */
+  --shadow-navbar-premium: 0_20px_50px_rgba (0, 0, 0, 0.4);
+}
