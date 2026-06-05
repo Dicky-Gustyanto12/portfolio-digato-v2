@@ -1,25 +1,64 @@
-import { useState, useEffect } from "react";
-import digato from "./assets/digato.png";
+import { useState, useEffect, useRef } from "react";
 import projects1 from "./assets/projects1.png";
 import Navbar from "./components/Navbar";
+import ProjectShowcase from "./components/ProjectShowcase";
+
+const useTypewriter = (
+  text: string,
+  speed: number = 50,
+  startDelay: number = 0,
+) => {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let intervalId: ReturnType<typeof setInterval>;
+
+    timeoutId = setTimeout(() => {
+      let i = 0;
+      intervalId = setInterval(() => {
+        setDisplayedText(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) {
+          clearInterval(intervalId);
+        }
+      }, speed);
+    }, startDelay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
+  }, [text, speed, startDelay]);
+
+  return displayedText;
+};
 
 function App() {
-  const [hasScrolled, setHasScrolled] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  // 1. Tambahkan state untuk mendeteksi apakah gambar sedang diklik (expanded)
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
+
+  const showcaseRef = useRef<HTMLDivElement>(null);
+
+  const titleLine1 = useTypewriter("Portfolio", 70, 500);
+  const titleLine2 = useTypewriter("Dicky Gustyanto", 70, 1300);
+  const roleText = useTypewriter("Fullstack Developer.", 50, 2600);
+  const quoteText = useTypewriter(
+    '"Every masterpiece starts with a long learning journey."',
+    40,
+    1500,
+  );
+  const philText = useTypewriter("— Digato", 40, 2800);
 
   useEffect(() => {
     setIsLoaded(true);
-
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setHasScrolled(true);
-      } else {
-        setHasScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollToShowcase = () => {
+    showcaseRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="w-full h-auto bg-zinc-950 text-zinc-900 font-sans relative selection:bg-zinc-900 selection:text-white">
@@ -29,75 +68,136 @@ function App() {
 
       {/* 🥞 SECTION 1: PORTFOLIO MAIN (HERO) */}
       <div className="w-full min-h-screen md:h-screen p-6 sm:p-10 md:sticky md:top-0 z-10 bg-slate-100 flex items-center justify-center relative">
-        <div className="w-full h-auto md:h-full flex flex-col lg:grid lg:grid-cols-3 gap-8 lg:gap-10 p-4 md:p-10 justify-center">
+        <div className="w-full h-auto md:h-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10 px-4 pt-10 pb-10 md:p-10 justify-center">
           {/* KOTAK 1: Brand & Role */}
           <div
             className={`flex flex-col justify-center text-left transition-all duration-1000 ease-out ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mb-3 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" />
-            </span>
-            <h1 className="text-6xl sm:text-5xl md:text-6xl font-black text-zinc-900 tracking-tight leading-[0.95]">
-              Portfolio <br /> Dicky Gustyanto
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mb-3 flex items-center gap-2"></span>
+
+            <h1 className="relative text-6xl sm:text-5xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[0.95]">
+              <span className="opacity-0 select-none" aria-hidden="true">
+                Portfolio <br /> Dicky Gustyanto
+              </span>
+              <span className="absolute top-0 left-0 w-full h-full">
+                {titleLine1} <br /> {titleLine2}
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl mt-4 text-zinc-700 ml-0.5 ">
-              Fullstack Developer.
+
+            <p className="relative text-xl md:text-2xl mt-4 text-zinc-700 ml-0.5">
+              <span className="opacity-0 select-none" aria-hidden="true">
+                Fullstack Developer.
+              </span>
+              <span className="absolute top-0 left-0 w-full h-full">
+                {roleText}
+              </span>
             </p>
           </div>
 
-          {/* KOTAK 2: VERTICAL FLOATING STACK WITH GRADUAL GRAYSCALE */}
-          <div className="flex items-center justify-center h-[400px] md:h-full relative w-full overflow-visible py-12 lg:py-0">
-            <div className="relative w-64 h-40 sm:w-72 sm:h-44 md:w-80 md:h-48 group">
-              <div className="absolute inset-0 bg-zinc-300 rounded-2xl shadow-xl transition-all duration-700 ease-out transform -translate-y-14 sm:-translate-y-16 scale-85 grayscale opacity-40 group-hover:-translate-y-24 group-hover:scale-90 overflow-hidden border border-zinc-400/20">
-                <img
-                  src={projects1}
-                  alt="Project Stack Back"
-                  className="w-full h-full object-cover object-center"
-                />
+          {/* KOTAK 2: VERTICAL FLOATING STACK */}
+          <div className="flex items-center justify-center h-[200px] sm:h-[260px] md:h-full relative w-full overflow-visible mt-16 lg:mt-0 py-0">
+            {/* 2. Tambahkan onClick dan cursor-pointer di kontainer .group */}
+            <div
+              className="relative w-72 h-48 sm:w-80 sm:h-56 md:w-96 md:h-64 lg:w-[26rem] lg:h-[18rem] xl:w-[30rem] xl:h-[20rem] group cursor-pointer"
+              onClick={() => setIsImageExpanded(!isImageExpanded)}
+            >
+              {/* Gambar Paling Belakang */}
+              <div
+                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1000ms] ${isLoaded ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-12 -rotate-3"}`}
+              >
+                {/* 3. Gunakan ternary operator (isImageExpanded ? ... : ...) yang digabung dengan group-hover */}
+                <div
+                  className={`absolute inset-0 bg-zinc-300 rounded-2xl shadow-xl transition-all duration-700 ease-out transform overflow-hidden border border-zinc-400/20 grayscale opacity-40 ${
+                    isImageExpanded
+                      ? "-translate-y-24 sm:-translate-y-28 scale-90"
+                      : "-translate-y-16 sm:-translate-y-20 scale-85 group-hover:-translate-y-28 group-hover:scale-90"
+                  }`}
+                >
+                  <img
+                    src={projects1}
+                    alt="Project Stack Back"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
               </div>
 
-              <div className="absolute inset-0 bg-zinc-200 rounded-2xl shadow-2xl transition-all duration-700 ease-out transform -translate-y-7 sm:-translate-y-8 scale-92 grayscale-[60%] opacity-70 group-hover:-translate-y-12 group-hover:scale-98 overflow-hidden border border-zinc-300/30">
-                <img
-                  src={projects1}
-                  alt="Project Stack Middle"
-                  className="w-full h-full object-cover object-center"
-                />
+              {/* Gambar Tengah */}
+              <div
+                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1400ms] ${isLoaded ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-16 rotate-0"}`}
+              >
+                <div
+                  className={`absolute inset-0 bg-zinc-200 rounded-2xl shadow-2xl transition-all duration-700 ease-out transform overflow-hidden border border-zinc-300/30 grayscale-[60%] opacity-70 ${
+                    isImageExpanded
+                      ? "-translate-y-12 sm:-translate-y-14 scale-95 sm:scale-98"
+                      : "-translate-y-8 sm:-translate-y-10 scale-92 group-hover:-translate-y-14 group-hover:scale-98"
+                  }`}
+                >
+                  <img
+                    src={projects1}
+                    alt="Project Stack Middle"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
               </div>
 
-              <div className="absolute inset-0 bg-white rounded-2xl z-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-white/40 transition-all duration-700 ease-out transform scale-100 group-hover:scale-105 overflow-hidden ">
-                <img
-                  src={projects1}
-                  alt="Main Project Front"
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none" />
+              {/* Gambar Depan */}
+              <div
+                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1800ms] ${isLoaded ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-20 rotate-3"}`}
+              >
+                <div
+                  className={`absolute inset-0 bg-white rounded-2xl z-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-white/40 transition-all duration-700 ease-out transform overflow-hidden ${
+                    isImageExpanded
+                      ? "scale-102 sm:scale-105"
+                      : "scale-100 group-hover:scale-105"
+                  }`}
+                >
+                  <img
+                    src={projects1}
+                    alt="Main Project Front"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none" />
+                </div>
               </div>
             </div>
           </div>
 
           {/* KOTAK 3: Philosophy & Quote */}
           <div
-            className={`flex flex-col justify-center pt-6 border-t border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${
+            className={`flex flex-col justify-center pt-6 -mt-2 lg:mt-0 border-t border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <p className="text-xl sm:text-2xl leading-relaxed text-zinc-700 italic font-serif">
-              "Every masterpiece starts with a long learning journey."
+            <p className="relative text-xl sm:text-2xl leading-relaxed text-zinc-700 italic font-serif">
+              <span className="opacity-0 select-none" aria-hidden="true">
+                "Every masterpiece starts with a long learning journey."
+              </span>
+              <span className="absolute top-0 left-0 w-full h-full">
+                {quoteText}
+              </span>
             </p>
-            <span className="text-[10px] md:text-xs font-bold tracking-widest text-zinc-400 mt-4 block uppercase">
-              — Philosophy
+
+            <span className="relative text-[10px] md:text-xs font-bold tracking-widest text-zinc-400 mt-4 block uppercase">
+              <span className="opacity-0 select-none" aria-hidden="true">
+                — Digato
+              </span>
+              <span className="absolute top-0 left-0 w-full h-full">
+                {philText}
+              </span>
             </span>
           </div>
         </div>
 
+        {/* Tombol Scroll */}
         <div
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-1.5 transition-opacity duration-1000 delay-700 ${
+          onClick={scrollToShowcase}
+          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer hover:text-zinc-500 transition-all duration-1000 delay-700 ${
             isLoaded ? "opacity-100 animate-bounce" : "opacity-0"
           }`}
         >
-          <span className="text-[9px] font-bold tracking-[0.25em] uppercase ">
+          <span className="text-[9px] font-bold tracking-[0.25em] uppercase">
             Scroll to explore
           </span>
           <svg
@@ -116,74 +216,9 @@ function App() {
         </div>
       </div>
 
-      {/* 🥞 SECTION 2: PROJECT SECTION */}
-      <div
-        className={`w-full min-h-screen md:h-screen p-6 sm:p-10 relative z-20 bg-slate-100 flex items-center justify-center border-t border-zinc-200/30 transition-all duration-700 ${
-          hasScrolled
-            ? "md:shadow-[0_-30px_60px_-10px_rgba(0,0,0,0.12)]"
-            : "shadow-none"
-        }`}
-      >
-        <div className="w-full h-auto md:h-full flex flex-col lg:grid lg:grid-cols-3 gap-8 lg:gap-10 p-4 md:p-10 justify-center">
-          {/* KOTAK 1: Project Title */}
-          <div
-            className={`flex flex-col justify-center transition-all duration-1000 ease-out ${
-              hasScrolled
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-12"
-            }`}
-          >
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mb-3 block">
-              ✦ FEATURED WORK
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-none">
-              Project Terbaru
-            </h2>
-            <p className="text-lg md:text-xl mt-2 text-zinc-500 font-medium">
-              E-Commerce & IoT Project.
-            </p>
-          </div>
-
-          {/* KOTAK 2: Showcase Image */}
-          <div
-            className={`flex justify-center items-center py-6 lg:py-0 relative group transition-all duration-1000 delay-200 ease-out ${
-              hasScrolled ? "opacity-100 scale-100" : "opacity-0 scale-90"
-            }`}
-          >
-            <div className="absolute inset-0 bg-emerald-400/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <img
-              src={digato}
-              alt="Project Showcase"
-              className="w-40 sm:w-48 md:w-3/5 h-auto object-contain max-h-[30vh] md:max-h-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.08)] transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
-
-          {/* KOTAK 3: Project Description */}
-          <div
-            className={`flex flex-col justify-center pt-6 border-t border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-400 ease-out ${
-              hasScrolled
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-12"
-            }`}
-          >
-            <p className="text-sm md:text-base leading-relaxed text-zinc-600 font-medium">
-              Menampilkan karya rekayasa perangkat lunak terbaik dengan optimasi
-              performa tinggi, struktur kode yang modular menggunakan React
-              TypeScript dan ekosistem modern.
-            </p>
-            <div className="flex gap-2 mt-4 flex-wrap">
-              <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-zinc-200/60 text-zinc-700 rounded-md border border-zinc-300/20">
-                React
-              </span>
-              <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-zinc-200/60 text-zinc-700 rounded-md border border-zinc-300/20">
-                TypeScript
-              </span>
-              <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-zinc-200/60 text-zinc-700 rounded-md border border-zinc-300/20">
-                Tailwind
-              </span>
-            </div>
-          </div>
-        </div>
+      {/* 🥞 SECTION 2: INTERACTIVE PROJECT SHOWCASE */}
+      <div ref={showcaseRef} className="relative z-20">
+        <ProjectShowcase />
       </div>
     </div>
   );
