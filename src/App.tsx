@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import projects1 from "./assets/projects1.png";
+import jayadigaImg from "./assets/jayadiga.png";
 import Navbar from "./components/Navbar";
+import Journey from "./components/Journey";
 import ProjectShowcase from "./components/ProjectShowcase";
+import AboutMe from "./components/AboutMe";
 
 const useTypewriter = (
   text: string,
@@ -19,9 +22,7 @@ const useTypewriter = (
       intervalId = setInterval(() => {
         setDisplayedText(text.slice(0, i + 1));
         i++;
-        if (i >= text.length) {
-          clearInterval(intervalId);
-        }
+        if (i >= text.length) clearInterval(intervalId);
       }, speed);
     }, startDelay);
 
@@ -36,11 +37,9 @@ const useTypewriter = (
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-
-  // 1. Tambahkan state untuk mendeteksi apakah gambar sedang diklik (expanded)
   const [isImageExpanded, setIsImageExpanded] = useState(false);
 
-  const showcaseRef = useRef<HTMLDivElement>(null);
+  const exploreRef = useRef<HTMLDivElement>(null);
 
   const titleLine1 = useTypewriter("Portfolio", 70, 500);
   const titleLine2 = useTypewriter("Dicky Gustyanto", 70, 1300);
@@ -56,8 +55,8 @@ function App() {
     setIsLoaded(true);
   }, []);
 
-  const scrollToShowcase = () => {
-    showcaseRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToExplore = () => {
+    exploreRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -66,28 +65,28 @@ function App() {
 
       <div className="fixed inset-0 opacity-[0.012] pointer-events-none z-50 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe')] mix-blend-overlay" />
 
-      {/* 🥞 SECTION 1: PORTFOLIO MAIN (HERO) */}
-      <div className="w-full min-h-screen md:h-screen p-6 sm:p-10 md:sticky md:top-0 z-10 bg-slate-100 flex items-center justify-center relative">
-        <div className="w-full h-auto md:h-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10 px-4 pt-10 pb-10 md:p-10 justify-center">
-          {/* KOTAK 1: Brand & Role */}
+      {/* SECTION 1: HERO */}
+      <div className="w-full h-screen p-6 sm:p-10 sticky top-0 z-0 bg-slate-100 flex items-center justify-center">
+        <div className="w-full h-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10 px-4 pt-10 pb-10 md:p-10 justify-center">
           <div
-            className={`flex flex-col justify-center text-left transition-all duration-1000 ease-out ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`flex flex-col justify-center text-left transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mb-3 flex items-center gap-2"></span>
-
             <h1 className="relative text-6xl sm:text-5xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[0.95]">
-              <span className="opacity-0 select-none" aria-hidden="true">
+              <span
+                className="opacity-0 select-none pointer-events-none"
+                aria-hidden="true"
+              >
                 Portfolio <br /> Dicky Gustyanto
               </span>
               <span className="absolute top-0 left-0 w-full h-full">
                 {titleLine1} <br /> {titleLine2}
               </span>
             </h1>
-
             <p className="relative text-xl md:text-2xl mt-4 text-zinc-700 ml-0.5">
-              <span className="opacity-0 select-none" aria-hidden="true">
+              <span
+                className="opacity-0 select-none pointer-events-none"
+                aria-hidden="true"
+              >
                 Fullstack Developer.
               </span>
               <span className="absolute top-0 left-0 w-full h-full">
@@ -96,91 +95,74 @@ function App() {
             </p>
           </div>
 
-          {/* KOTAK 2: VERTICAL FLOATING STACK */}
-          <div className="flex items-center justify-center h-[200px] sm:h-[260px] md:h-full relative w-full overflow-visible mt-16 lg:mt-0 py-0">
-            {/* 2. Tambahkan onClick dan cursor-pointer di kontainer .group */}
+          <div className="flex items-center justify-center h-[250px] sm:h-[300px] md:h-full relative w-full overflow-visible mt-10 lg:mt-0">
             <div
-              className="relative w-72 h-48 sm:w-80 sm:h-56 md:w-96 md:h-64 lg:w-[26rem] lg:h-[18rem] xl:w-[30rem] xl:h-[20rem] group cursor-pointer"
+              className="relative w-72 h-48 sm:w-80 sm:h-52 md:w-96 md:h-64 lg:w-[26rem] lg:h-[18rem] group cursor-pointer"
               onClick={() => setIsImageExpanded(!isImageExpanded)}
             >
-              {/* Gambar Paling Belakang */}
               <div
-                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1000ms] ${isLoaded ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-12 -rotate-3"}`}
+                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1000ms] ${isLoaded ? "opacity-100" : "opacity-0"}`}
               >
-                {/* 3. Gunakan ternary operator (isImageExpanded ? ... : ...) yang digabung dengan group-hover */}
                 <div
-                  className={`absolute inset-0 bg-zinc-300 rounded-2xl shadow-xl transition-all duration-700 ease-out transform overflow-hidden border border-zinc-400/20 grayscale opacity-40 ${
-                    isImageExpanded
-                      ? "-translate-y-24 sm:-translate-y-28 scale-90"
-                      : "-translate-y-16 sm:-translate-y-20 scale-85 group-hover:-translate-y-28 group-hover:scale-90"
-                  }`}
+                  className={`absolute inset-0 rounded-2xl shadow-xl transition-all duration-700 ease-out transform overflow-hidden ${isImageExpanded ? "-translate-y-24 scale-90" : "-translate-y-16 scale-85 group-hover:-translate-y-20"}`}
                 >
                   <img
                     src={projects1}
                     alt="Project Stack Back"
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover object-center grayscale opacity-50"
                   />
                 </div>
               </div>
 
-              {/* Gambar Tengah */}
               <div
-                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1400ms] ${isLoaded ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-16 rotate-0"}`}
+                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1400ms] ${isLoaded ? "opacity-100" : "opacity-0"}`}
               >
                 <div
-                  className={`absolute inset-0 bg-zinc-200 rounded-2xl shadow-2xl transition-all duration-700 ease-out transform overflow-hidden border border-zinc-300/30 grayscale-[60%] opacity-70 ${
-                    isImageExpanded
-                      ? "-translate-y-12 sm:-translate-y-14 scale-95 sm:scale-98"
-                      : "-translate-y-8 sm:-translate-y-10 scale-92 group-hover:-translate-y-14 group-hover:scale-98"
-                  }`}
+                  className={`absolute inset-0 bg-zinc-200 rounded-2xl shadow-2xl transition-all duration-700 ease-out transform overflow-hidden ${isImageExpanded ? "-translate-y-12 scale-95" : "-translate-y-8 scale-92 group-hover:-translate-y-12"}`}
                 >
                   <img
                     src={projects1}
                     alt="Project Stack Middle"
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover object-center grayscale-[20%] saturate-90"
                   />
                 </div>
               </div>
 
-              {/* Gambar Depan */}
               <div
-                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1800ms] ${isLoaded ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-20 rotate-3"}`}
+                className={`absolute inset-0 transition-all duration-1000 ease-out delay-[1800ms] ${isLoaded ? "opacity-100" : "opacity-0"}`}
               >
                 <div
-                  className={`absolute inset-0 bg-white rounded-2xl z-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-white/40 transition-all duration-700 ease-out transform overflow-hidden ${
-                    isImageExpanded
-                      ? "scale-102 sm:scale-105"
-                      : "scale-100 group-hover:scale-105"
-                  }`}
+                  className={`absolute inset-0 bg-white rounded-2xl z-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] border border-white/40 transition-all duration-700 ease-out transform overflow-hidden ${isImageExpanded ? "scale-100" : "scale-100 group-hover:scale-105"}`}
                 >
                   <img
                     src={projects1}
                     alt="Main Project Front"
                     className="w-full h-full object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none" />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* KOTAK 3: Philosophy & Quote */}
           <div
-            className={`flex flex-col justify-center pt-6 -mt-2 lg:mt-0 border-t border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`flex flex-col justify-center pt-6 -mt-2 lg:mt-0 border-t border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
             <p className="relative text-xl sm:text-2xl leading-relaxed text-zinc-700 italic font-serif">
-              <span className="opacity-0 select-none" aria-hidden="true">
+              <span
+                className="opacity-0 select-none pointer-events-none"
+                aria-hidden="true"
+              >
                 "Every masterpiece starts with a long learning journey."
               </span>
               <span className="absolute top-0 left-0 w-full h-full">
                 {quoteText}
               </span>
             </p>
-
             <span className="relative text-[10px] md:text-xs font-bold tracking-widest text-zinc-400 mt-4 block uppercase">
-              <span className="opacity-0 select-none" aria-hidden="true">
+              <span
+                className="opacity-0 select-none pointer-events-none"
+                aria-hidden="true"
+              >
                 — Digato
               </span>
               <span className="absolute top-0 left-0 w-full h-full">
@@ -190,12 +172,9 @@ function App() {
           </div>
         </div>
 
-        {/* Tombol Scroll */}
         <div
-          onClick={scrollToShowcase}
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer hover:text-zinc-500 transition-all duration-1000 delay-700 ${
-            isLoaded ? "opacity-100 animate-bounce" : "opacity-0"
-          }`}
+          onClick={scrollToExplore}
+          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer hover:text-zinc-500 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 animate-bounce" : "opacity-0"}`}
         >
           <span className="text-[9px] font-bold tracking-[0.25em] uppercase">
             Scroll to explore
@@ -216,9 +195,19 @@ function App() {
         </div>
       </div>
 
-      {/* 🥞 SECTION 2: INTERACTIVE PROJECT SHOWCASE */}
-      <div ref={showcaseRef} className="relative z-20">
+      {/* SECTION 2: PROJECTS */}
+      <div ref={exploreRef} className="relative z-10">
         <ProjectShowcase />
+      </div>
+
+      {/* SECTION 3: JOURNEY */}
+      <div className="relative z-20">
+        <Journey />
+      </div>
+
+      {/* SECTION 4: ABOUT ME */}
+      <div className="relative z-30">
+        <AboutMe />
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ const PROJECT_DATA: ProjectItem[] = [
     title: "SIMURP Calendar Project",
     image: simurpkalenderImg,
     description:
-      "Sistem kalender digital untuk optimalisasi penjadwalan dan manajemen agenda kegiatan strategis dalam program SIMURP.",
+      "Kalender untuk optimalisasi penjadwalan dan manajemen agenda kegiatan strategis dalam program SIMURP.",
   },
   {
     id: 9,
@@ -85,26 +85,37 @@ const PROJECT_DATA: ProjectItem[] = [
 export default function ProjectShowcase() {
   const [progress, setProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const ticking = useRef(false); // Ref untuk mencegah re-render berlebihan
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const { top, height } = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const maxScroll = height - windowHeight;
-      const scrollPercentage = maxScroll > 0 ? -top / maxScroll : 0;
-      setProgress(
-        Math.max(
-          0,
-          Math.min(
-            scrollPercentage * (PROJECT_DATA.length - 1),
-            PROJECT_DATA.length - 1,
-          ),
-        ),
-      );
+      // Teknik requestAnimationFrame agar animasi sinkron dengan refresh rate layar
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          if (!containerRef.current) return;
+
+          const { top, height } = containerRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          const maxScroll = height - windowHeight;
+          const scrollPercentage = maxScroll > 0 ? -top / maxScroll : 0;
+
+          setProgress(
+            Math.max(
+              0,
+              Math.min(
+                scrollPercentage * (PROJECT_DATA.length - 1),
+                PROJECT_DATA.length - 1,
+              ),
+            ),
+          );
+
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -114,9 +125,7 @@ export default function ProjectShowcase() {
       className="relative z-30 w-full bg-zinc-950"
       style={{ height: `${PROJECT_DATA.length * 100}vh` }}
     >
-      {/* PERBAIKAN 1: pt-40 lg:pt-48 untuk mendorong kontainer kotak lebih ke bawah */}
       <div className="sticky top-0 h-screen w-full flex flex-col items-center pt-40 lg:pt-40 overflow-hidden">
-        {/* PERBAIKAN 2: top-24 lg:top-28 untuk memberi jarak aman antara judul dan navbar */}
         <h2 className="absolute top-24 lg:top-20 text-4xl md:text-5xl font-black text-white tracking-tight z-20">
           Projects
         </h2>
@@ -144,7 +153,6 @@ export default function ProjectShowcase() {
           {PROJECT_DATA.map((project, index) => {
             const offset = progress - index;
             const isPast = offset > 0;
-
             const translateY = isPast ? -(offset * 20) : -(offset * 100);
             const opacity = isPast ? Math.max(1 - offset * 2, 0) : 1;
             const scale = isPast ? Math.max(1 - offset * 0.05, 0.95) : 1;
@@ -152,14 +160,12 @@ export default function ProjectShowcase() {
             return (
               <div
                 key={project.id}
-                // PERBAIKAN 3: Menghapus max-h-full dan overflow-y-auto agar tidak ada scrollbar di dalam kotak
-                className={`absolute top-0 w-full h-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-10 lg:p-14 flex flex-col lg:flex-row gap-6 lg:gap-16 items-center ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}
+                className={`absolute top-0 w-full h-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-10 lg:p-14 flex flex-col lg:flex-row gap-6 lg:gap-16 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
                 style={{
                   transform: `translateY(${translateY}vh) scale(${scale})`,
                   opacity: opacity,
                   zIndex: index,
+                  willChange: "transform, opacity", // Memberi instruksi GPU untuk mengoptimalkan animasi ini
                 }}
               >
                 <div className="w-full lg:w-1/2 flex items-center justify-center bg-zinc-800 rounded-2xl p-6 lg:p-10 min-h-[200px] lg:min-h-[400px] xl:min-h-[450px]">
@@ -180,7 +186,6 @@ export default function ProjectShowcase() {
                   <p className="text-justify md:text-left text-sm md:text-base lg:text-lg text-zinc-400 font-medium leading-relaxed mb-6 lg:mb-10">
                     {project.description}
                   </p>
-
                   <button className="w-fit flex items-center gap-3 px-6 py-3 lg:px-8 lg:py-4 rounded-full bg-white text-zinc-950 font-bold hover:bg-zinc-200 transition-colors text-sm lg:text-base">
                     <span>View Detail</span>
                   </button>
