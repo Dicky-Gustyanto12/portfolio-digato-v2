@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import projects1 from "./assets/projects1.png";
-import jayadigaImg from "./assets/jayadiga.png";
 import Navbar from "./components/Navbar";
 import Journey from "./components/Journey";
 import ProjectShowcase from "./components/ProjectShowcase";
