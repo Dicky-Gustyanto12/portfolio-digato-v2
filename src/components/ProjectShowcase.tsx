@@ -14,6 +14,7 @@ interface ProjectItem {
   title: string;
   image: string;
   description: string;
+  link: string; // Properti baru untuk menyimpan link
 }
 
 const PROJECT_DATA: ProjectItem[] = [
@@ -23,6 +24,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: alsindataImg,
     description:
       "Sistem Rekomendasi Alat dan Mesin Pertanian di Dinas Ketahanan Pangan dan Pertanian Kabupaten Klaten Berbasis Website.",
+    link: "https://github.com/Dicky-Gustyanto12/smart-deploy",
   },
   {
     id: 2,
@@ -30,6 +32,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: jayadigaImg,
     description:
       "Website sistem manajemen dashboard internal dengan integrasi API real-time mencakup tentang absensi, cashflow, manajemen proyek.",
+    link: "https://dicky-gustyanto12.github.io/erp-jayadigainnovation/",
   },
   {
     id: 3,
@@ -37,6 +40,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: propaktaniImg,
     description:
       "Buku panduan penggunaan Website Jejaring Hulu Hilir (JHH), platform dari Kementerian Pertanian untuk membangun jejaring petani, akses pelatihan Tani Trainer, dan informasi pasar.",
+    link: "https://drive.google.com/drive/folders/1IL7rPIFuEIigt189HM2E63W97hdg5fKj?usp=drive_link",
   },
   {
     id: 4,
@@ -44,6 +48,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: sifoyaImg,
     description:
       "Petunjuk penggunaan teknis aplikasi SIFOYA (Sistem Informasi Aplikasi BBIB Singosari), platform Android untuk mendigitalisasi layanan Balai Besar Inseminasi Buatan Singosari.",
+    link: "https://drive.google.com/drive/folders/1YtO3LAlgcsxwB8jacuql1724HzQYBe1f?usp=drive_link",
   },
   {
     id: 5,
@@ -51,6 +56,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: simurpImg,
     description:
       "Mengelola strategi konten media sosial SIMURP untuk mengedukasi publik mengenai praktik Pertanian Cerdas Iklim melalui publikasi harian yang konsisten.",
+    link: "https://drive.google.com/drive/folders/1qsYCWPGq0CIAl8fnA0OaQ-Y0PZOFhJRD?usp=drive_link",
   },
   {
     id: 6,
@@ -58,6 +64,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: bbibsosmedImg,
     description:
       "Mengelola strategi konten media sosial BBIB guna mengedukasi masyarakat terkait layanan penyediaan semen beku ternak unggul nasional.",
+    link: "https://drive.google.com/drive/folders/1cQyazbu1kV1rOPX28cT6IXo6R8YoLk5s?usp=drive_link",
   },
   {
     id: 7,
@@ -65,6 +72,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: radarsuaraImg,
     description:
       "Sistem manajemen berita portal Radarsuara yang dirancang untuk mempermudah alur kerja admin dalam menyusun, menyunting, hingga memublikasikan artikel berita secara efisien.",
+    link: "https://drive.google.com/drive/folders/1VnakCv9gnty25kMnotBviezffbGsP4Xp?usp=drive_link",
   },
   {
     id: 8,
@@ -72,6 +80,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: simurpkalenderImg,
     description:
       "Kalender untuk optimalisasi penjadwalan dan manajemen agenda kegiatan strategis dalam program SIMURP.",
+    link: "https://drive.google.com/drive/folders/1Z6RsMODxlxpiXsUeYay73zomufqIQTTA?usp=drive_link",
   },
   {
     id: 9,
@@ -79,17 +88,17 @@ const PROJECT_DATA: ProjectItem[] = [
     image: scmImg,
     description:
       "Manajemen rantai pasok di PT Sipatex Putri Lestari mencakup integrasi aliran bahan baku, peramalan kebutuhan menggunakan metode statistik, dan evaluasi kinerja pemasok.",
+    link: "https://drive.google.com/drive/folders/1-suLY_Ve30Yw95iOzZ5h9g-eN5P7VH48?usp=drive_link",
   },
 ];
 
 export default function ProjectShowcase() {
   const [progress, setProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const ticking = useRef(false); // Ref untuk mencegah re-render berlebihan
+  const ticking = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Teknik requestAnimationFrame agar animasi sinkron dengan refresh rate layar
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
           if (!containerRef.current) return;
@@ -165,7 +174,7 @@ export default function ProjectShowcase() {
                   transform: `translateY(${translateY}vh) scale(${scale})`,
                   opacity: opacity,
                   zIndex: index,
-                  willChange: "transform, opacity", // Memberi instruksi GPU untuk mengoptimalkan animasi ini
+                  willChange: "transform, opacity",
                 }}
               >
                 <div className="w-full lg:w-1/2 flex items-center justify-center bg-zinc-800 rounded-2xl p-6 lg:p-10 min-h-[200px] lg:min-h-[400px] xl:min-h-[450px]">
@@ -186,9 +195,16 @@ export default function ProjectShowcase() {
                   <p className="text-justify md:text-left text-sm md:text-base lg:text-lg text-zinc-400 font-medium leading-relaxed mb-6 lg:mb-10">
                     {project.description}
                   </p>
-                  <button className="w-fit flex items-center gap-3 px-6 py-3 lg:px-8 lg:py-4 rounded-full bg-white text-zinc-950 font-bold hover:bg-zinc-200 transition-colors text-sm lg:text-base">
+
+                  {/* Button diubah menjadi tag <a> untuk link external */}
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-fit flex items-center gap-3 px-6 py-3 lg:px-8 lg:py-4 rounded-full bg-white text-zinc-950 font-bold hover:bg-zinc-200 transition-colors text-sm lg:text-base cursor-pointer"
+                  >
                     <span>View Detail</span>
-                  </button>
+                  </a>
                 </div>
               </div>
             );
