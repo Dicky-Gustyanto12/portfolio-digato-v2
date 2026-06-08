@@ -73,7 +73,7 @@ function App() {
           <div
             className={`flex flex-col justify-center text-left transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
-            <h1 className="relative text-6xl sm:text-5xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[0.95]">
+            <h1 className="relative text-4xl sm:text-5xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[0.95]">
               <span
                 className="opacity-0 select-none pointer-events-none"
                 aria-hidden="true"
@@ -84,7 +84,7 @@ function App() {
                 {titleLine1} <br /> {titleLine2}
               </span>
             </h1>
-            <p className="relative text-xl md:text-2xl mt-4 text-zinc-700 ml-0.5">
+            <p className="relative text-sm md:text-2xl mt-4 text-zinc-700 ml-0.5">
               <span
                 className="opacity-0 select-none pointer-events-none"
                 aria-hidden="true"
@@ -97,9 +97,9 @@ function App() {
             </p>
           </div>
 
-          <div className="flex items-center justify-center h-[250px] sm:h-[300px] md:h-full relative w-full overflow-visible mt-10 lg:mt-0">
+          <div className="flex items-center justify-center h-[180px] sm:h-[300px] md:h-full relative w-full overflow-visible mt-8 lg:mt-0">
             <div
-              className="relative w-72 h-48 sm:w-80 sm:h-52 md:w-96 md:h-64 lg:w-[26rem] lg:h-[18rem] group cursor-pointer"
+              className="relative w-46 h-26 sm:w-80 sm:h-52 md:w-96 md:h-64 lg:w-[26rem] lg:h-[18rem] group cursor-pointer"
               onClick={() => setIsImageExpanded(!isImageExpanded)}
             >
               <div
@@ -125,7 +125,7 @@ function App() {
                   <img
                     src={projects1}
                     alt="Project Stack Middle"
-                    className="w-full h-full object-cover object-center grayscale-[20%] saturate-90"
+                    className="w-full h-full object-cover object-center grayscale-[60%] saturate-90"
                   />
                 </div>
               </div>
@@ -147,9 +147,9 @@ function App() {
           </div>
 
           <div
-            className={`flex flex-col justify-center pt-6 -mt-2 lg:mt-0 border-t border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            className={`flex flex-col justify-center -mt-7 -mt-2 lg:mt-0  border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
-            <p className="relative text-xl sm:text-2xl leading-relaxed text-zinc-700 italic font-serif">
+            <p className="relative text-sm sm:text-2xl leading-relaxed text-zinc-700 italic font-serif">
               <span
                 className="opacity-0 select-none pointer-events-none"
                 aria-hidden="true"
@@ -178,11 +178,12 @@ function App() {
           onClick={scrollToExplore}
           className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer hover:text-zinc-500 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 animate-bounce" : "opacity-0"}`}
         >
-          <span className="text-[9px] font-bold tracking-[0.25em] uppercase">
+          <span className="text-[7px] md:text-[9px] font-bold tracking-[0.25em] uppercase">
             Scroll to explore
           </span>
           <svg
-            className="w-4 h-4 text-black"
+            className="w-3 h-3 md:w-4 md:h-4
+             text-black"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

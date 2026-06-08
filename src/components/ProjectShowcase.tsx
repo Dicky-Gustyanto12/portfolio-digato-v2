@@ -131,11 +131,11 @@ export default function ProjectShowcase() {
         </h2>
 
         <div className="absolute bottom-6 flex flex-col items-center gap-1.5 animate-bounce text-zinc-500 z-40">
-          <span className="text-[9px] font-bold tracking-[0.25em] uppercase">
+          <span className="text-[7px] font-bold tracking-[0.25em] uppercase">
             Scroll to explore
           </span>
           <svg
-            className="w-4 h-4"
+            className="w-2 h-2 md:w-4 md:h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
