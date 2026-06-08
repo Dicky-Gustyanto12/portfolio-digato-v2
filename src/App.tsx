@@ -45,7 +45,7 @@ function App() {
   const titleLine2 = useTypewriter("Dicky Gustyanto", 70, 1300);
   const roleText = useTypewriter("Fullstack Developer.", 50, 2600);
   const quoteText = useTypewriter(
-    '"Every masterpiece starts with a long learning journey."',
+    '"Each line of code is a new lesson on the path to becoming an expert."',
     40,
     1500,
   );
@@ -66,7 +66,10 @@ function App() {
       <div className="fixed inset-0 opacity-[0.012] pointer-events-none z-50 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe')] mix-blend-overlay" />
 
       {/* SECTION 1: HERO */}
-      <div className="w-full h-screen p-6 sm:p-10 sticky top-0 z-0 bg-slate-100 flex items-center justify-center">
+      <div
+        id="home"
+        className="w-full h-screen p-6 sm:p-10 sticky top-0 z-0 bg-slate-100 flex items-center justify-center"
+      >
         <div className="w-full h-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10 px-4 pt-10 pb-10 md:p-10 justify-center">
           <div
             className={`flex flex-col justify-center text-left transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
@@ -196,17 +199,17 @@ function App() {
       </div>
 
       {/* SECTION 2: PROJECTS */}
-      <div ref={exploreRef} className="relative z-10">
+      <div id="projects" ref={exploreRef} className="relative z-10">
         <ProjectShowcase />
       </div>
 
       {/* SECTION 3: JOURNEY */}
-      <div className="relative z-20">
+      <div id="journey" className="relative z-20">
         <Journey />
       </div>
 
       {/* SECTION 4: ABOUT ME */}
-      <div className="relative z-30">
+      <div id="about" className="relative z-30">
         <AboutMe />
       </div>
     </div>

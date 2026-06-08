@@ -2,12 +2,19 @@
 import myProfileImg from "../assets/digato2.jpeg";
 
 const SKILLS = [
+  "Fullstack Development",
   "Frontend Development",
   "Backend Development",
   "React.js",
+  "Next.js",
+  "JavaScript",
   "TypeScript",
   "Tailwind CSS",
   "Node.js",
+  "Express.js",
+  "Laravel",
+  "MySQL",
+  "PostgreSQL",
   "API Integration",
 ];
 
@@ -26,7 +33,7 @@ export default function AboutMe() {
     <div className="w-full min-h-screen bg-zinc-950 flex flex-col items-center pt-20 pb-6 px-4 md:px-10 z-30 relative">
       {/* JUDUL SECTION */}
       <div className="w-full max-w-6xl text-center mb-6">
-        <h2 className="text-white text-2xl md:text-3xl font-bold tracking-tight">
+        <h2 className="text-white text-2xl md:text-4xl font-bold tracking-tight">
           About Me
         </h2>
       </div>
@@ -59,26 +66,70 @@ export default function AboutMe() {
             <p className="text-zinc-400 text-sm md:text-base font-medium">
               Fullstack Developer Based in Indonesia.
             </p>
-            {/* EMAIL WARNA PUTIH */}
-            <p className="text-white text-xs md:text-sm mt-1 font-mono break-all">
-              dickygustyanto12@gmail.com
-            </p>
+
+            {/* EMAIL WARNA PUTIH DENGAN ICON EMAIL KECIL */}
+            <div className="flex items-center gap-2 mt-1">
+              <svg
+                className="w-4 h-4 text-zinc-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              <p className="text-white text-xs md:text-sm font-mono break-all">
+                dickygustyanto12@gmail.com
+              </p>
+            </div>
           </div>
 
           {/* Socials & Action */}
           <div className="flex items-center gap-3 mt-6">
             <a
-              href="mailto:dickygustyanto12@gmail.com"
+              href="https://www.linkedin.com/in/dickygustyanto/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-grow text-center bg-zinc-800/80 hover:bg-zinc-700 text-white font-medium py-3 px-6 rounded-full transition-all border border-zinc-700/50 text-sm"
             >
               Connect with me
             </a>
+
+            {/* TOMBOL LINKEDIN */}
             <a
-              href="#"
+              href="https://www.linkedin.com/in/dickygustyanto/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-[52px] h-[52px] rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-[#0A66C2] hover:border-[#0A66C2] transition-all shrink-0"
+              title="LinkedIn"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+              </svg>
+            </a>
+
+            {/* TOMBOL EMAIL */}
+            <a
+              href="mailto:dickygustyanto12@gmail.com"
+              className="w-[52px] h-[52px] rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white transition-all shrink-0"
+              title="Email Me"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
               </svg>
             </a>
           </div>
@@ -107,7 +158,7 @@ export default function AboutMe() {
             </div>
           </div>
 
-          {/* Experience List - TAHUN DIHILANGKAN */}
+          {/* Experience List */}
           <div className="mt-auto">
             {EXPERIENCES.map((exp, i) => (
               <div
