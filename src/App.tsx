@@ -67,9 +67,9 @@ function App() {
       {/* SECTION 1: HERO */}
       <div
         id="home"
-        className="w-full h-screen p-6 sm:p-10 sticky top-0 z-0 bg-slate-100 flex items-center justify-center"
+        className="w-full min-h-screen p-6 sm:p-10 sticky top-0 z-0 bg-slate-100 flex items-center justify-center"
       >
-        <div className="w-full h-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10 px-4 pt-10 pb-10 md:p-10 justify-center">
+        <div className="w-full h-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10 px-4 pt-5 pb-5 md:p-10 justify-center">
           <div
             className={`flex flex-col justify-center text-left transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
@@ -97,7 +97,7 @@ function App() {
             </p>
           </div>
 
-          <div className="flex items-center justify-center h-[180px] sm:h-[300px] md:h-full relative w-full overflow-visible mt-8 lg:mt-0">
+          <div className="flex items-center justify-center h-[180px] sm:h-[300px] md:h-full relative w-full overflow-visible mt-15 lg:mt-0">
             <div
               className="relative w-46 h-26 sm:w-80 sm:h-52 md:w-96 md:h-64 lg:w-[26rem] lg:h-[18rem] group cursor-pointer"
               onClick={() => setIsImageExpanded(!isImageExpanded)}
@@ -147,9 +147,9 @@ function App() {
           </div>
 
           <div
-            className={`flex flex-col justify-center -mt-7 -mt-2 lg:mt-0  border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            className={`flex flex-col justify-center mt-2 lg:mt-0  border-zinc-200/60 lg:border-none lg:pt-0 lg:pl-10 lg:border-l lg:border-zinc-200 transition-all duration-1000 delay-500 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
-            <p className="relative text-sm sm:text-2xl leading-relaxed text-zinc-700 italic font-serif">
+            <p className="relative text-sm sm:text-2xl mb-5 leading-relaxed text-zinc-700 italic font-serif">
               <span
                 className="opacity-0 select-none pointer-events-none"
                 aria-hidden="true"
@@ -160,7 +160,7 @@ function App() {
                 {quoteText}
               </span>
             </p>
-            <span className="relative text-[10px] md:text-xs font-bold tracking-widest text-zinc-400 mt-4 block uppercase">
+            <span className="relative text-[10px] md:text-xs font-bold tracking-widest text-zinc-400  block uppercase">
               <span
                 className="opacity-0 select-none pointer-events-none"
                 aria-hidden="true"
@@ -176,7 +176,7 @@ function App() {
 
         <div
           onClick={scrollToExplore}
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer hover:text-zinc-500 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 animate-bounce" : "opacity-0"}`}
+          className={`absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer hover:text-zinc-500 transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 animate-bounce" : "opacity-0"}`}
         >
           <span className="text-[7px] md:text-[9px] font-bold tracking-[0.25em] uppercase">
             Scroll to explore
