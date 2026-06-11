@@ -14,7 +14,7 @@ interface ProjectItem {
   title: string;
   image: string;
   description: string;
-  link: string; // Properti baru untuk menyimpan link
+  link: string;
 }
 
 const PROJECT_DATA: ProjectItem[] = [
@@ -32,7 +32,7 @@ const PROJECT_DATA: ProjectItem[] = [
     image: jayadigaImg,
     description:
       "Website sistem manajemen dashboard internal dengan integrasi API real-time mencakup tentang absensi, cashflow, manajemen proyek.",
-    link: "https://dicky-gustyanto12.github.io/erp-jayadigainnovation/",
+    link: "https://dicky-gustyanto12.github.io/",
   },
   {
     id: 3,
@@ -134,17 +134,76 @@ export default function ProjectShowcase() {
       className="relative z-30 w-full bg-zinc-950"
       style={{ height: `${PROJECT_DATA.length * 100}vh` }}
     >
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center pt-40 lg:pt-40 overflow-hidden">
-        <h2 className="absolute top-24 lg:top-20 text-4xl md:text-5xl font-black text-white tracking-tight z-20">
+      {/* Menggunakan justify-center agar posisi kartu benar-benar di tengah layar */}
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+        {/* Judul dengan posisi absolute agar tidak mengganggu layout kartu */}
+        <h2 className="absolute top-16 md:top-24 text-3xl md:text-5xl font-black text-white tracking-tight z-20">
           Projects
         </h2>
 
+        {/* Kontainer Kartu dengan max-height agar tidak nabrak atas-bawah */}
+        <div className="relative w-[calc(100%-2rem)] md:w-[calc(100%-6rem)] max-w-6xl h-[65vh] max-h-[600px] mt-8 md:mt-12">
+          {PROJECT_DATA.map((project, index) => {
+            const offset = progress - index;
+            const isPast = offset > 0;
+            const translateY = isPast ? -(offset * 15) : -(offset * 120);
+            const opacity = isPast ? Math.max(1 - offset * 1.5, 0) : 1;
+            const scale = isPast ? Math.max(1 - offset * 0.05, 0.95) : 1;
+
+            return (
+              <div
+                key={project.id}
+                /* PERBAIKAN: Menggunakan gap proporsional, membuang width tetap, dan menggunakan flex-1 di children */
+                className={`absolute top-0 w-full h-full bg-zinc-900 border border-zinc-800 rounded-3xl p-5 md:p-8 lg:p-10 flex flex-col lg:flex-row gap-4 lg:gap-10 items-center overflow-hidden ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
+                style={{
+                  transform: `translateY(${translateY}vh) scale(${scale})`,
+                  opacity: opacity,
+                  zIndex: index,
+                  willChange: "transform, opacity",
+                }}
+              >
+                {/* Bagian Gambar: Menggunakan flex-1 agar otomatis membagi ruang 50:50 dengan aman */}
+                <div className="flex-1 w-full flex items-center justify-center bg-zinc-800 rounded-2xl p-4 md:p-6 lg:p-8 h-[40%] lg:h-full">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Bagian Teks: Menggunakan flex-1 agar teks tidak memaksakan lebar melebihi wadah */}
+                <div className="flex-1 w-full flex flex-col justify-center py-2 h-[60%] lg:h-full min-w-0">
+                  <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase mb-1 md:mb-2 block">
+                    0{project.id} — Projects
+                  </span>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white my-2 md:my-4 leading-tight truncate md:whitespace-normal">
+                    {project.title}
+                  </h3>
+                  <p className="text-justify md:text-left text-xs sm:text-sm md:text-base text-zinc-400 font-medium leading-relaxed mb-4 md:mb-8 line-clamp-3 md:line-clamp-none">
+                    {project.description}
+                  </p>
+
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-fit flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-full bg-white text-zinc-950 font-bold hover:bg-zinc-200 transition-colors text-xs md:text-sm cursor-pointer"
+                  >
+                    <span>View Detail</span>
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Scroll indicator dengan posisi absolute di bawah */}
         <div className="absolute bottom-6 flex flex-col items-center gap-1.5 animate-bounce text-zinc-500 z-40">
-          <span className="text-[7px] font-bold tracking-[0.25em] uppercase">
+          <span className="text-[7px] md:text-[9px] font-bold tracking-[0.25em] uppercase">
             Scroll to explore
           </span>
           <svg
-            className="w-2 h-2 md:w-4 md:h-4"
+            className="w-3 h-3 md:w-4 md:h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -156,59 +215,6 @@ export default function ProjectShowcase() {
               d="M19 14l-7 7m0 0l-7-7m7 7V3"
             />
           </svg>
-        </div>
-
-        <div className="relative w-[calc(100%-3rem)] md:w-[calc(100%-8rem)] max-w-7xl h-[65vh] lg:h-[70vh]">
-          {PROJECT_DATA.map((project, index) => {
-            const offset = progress - index;
-            const isPast = offset > 0;
-            const translateY = isPast ? -(offset * 20) : -(offset * 100);
-            const opacity = isPast ? Math.max(1 - offset * 2, 0) : 1;
-            const scale = isPast ? Math.max(1 - offset * 0.05, 0.95) : 1;
-
-            return (
-              <div
-                key={project.id}
-                className={`absolute top-0 w-full h-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-6 md:p-10 lg:p-14 flex flex-col lg:flex-row gap-6 lg:gap-16 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
-                style={{
-                  transform: `translateY(${translateY}vh) scale(${scale})`,
-                  opacity: opacity,
-                  zIndex: index,
-                  willChange: "transform, opacity",
-                }}
-              >
-                <div className="w-full lg:w-1/2 flex items-center justify-center bg-zinc-800 rounded-2xl p-6 lg:p-10 min-h-[200px] lg:min-h-[400px] xl:min-h-[450px]">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full max-h-[300px] lg:max-h-[400px] object-contain"
-                  />
-                </div>
-
-                <div className="w-full lg:w-1/2 flex flex-col justify-center py-2 lg:py-6">
-                  <span className="text-[10px] lg:text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase mb-2">
-                    0{project.id} — Projects
-                  </span>
-                  <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-white my-3 lg:my-5 leading-tight">
-                    {project.title}
-                  </h3>
-                  <p className="text-justify md:text-left text-sm md:text-base lg:text-lg text-zinc-400 font-medium leading-relaxed mb-6 lg:mb-10">
-                    {project.description}
-                  </p>
-
-                  {/* Button diubah menjadi tag <a> untuk link external */}
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-fit flex items-center gap-3 px-6 py-3 lg:px-8 lg:py-4 rounded-full bg-white text-zinc-950 font-bold hover:bg-zinc-200 transition-colors text-sm lg:text-base cursor-pointer"
-                  >
-                    <span>View Detail</span>
-                  </a>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </div>
